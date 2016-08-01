@@ -34,7 +34,7 @@ namespace Mojo
             this.tbExtension = new System.Windows.Forms.TextBox();
             this.lblCaller = new System.Windows.Forms.Label();
             this.tbCallerId = new System.Windows.Forms.TextBox();
-            this.tmDelivered = new System.Windows.Forms.Timer(this.components);
+            this.tmBufferPoll = new System.Windows.Forms.Timer(this.components);
             this.btnLogin = new System.Windows.Forms.Button();
             this.lblCalledAt = new System.Windows.Forms.Label();
             this.tbCalledAt = new System.Windows.Forms.TextBox();
@@ -50,10 +50,16 @@ namespace Mojo
             this.btn0 = new System.Windows.Forms.Button();
             this.lblDialed = new System.Windows.Forms.Label();
             this.tbDialed = new System.Windows.Forms.TextBox();
-            this.btnCall = new System.Windows.Forms.Button();
+            this.btnDial = new System.Windows.Forms.Button();
             this.btnToggle = new System.Windows.Forms.Button();
             this.btnMute = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnLine1 = new FButton.FsButton();
+            this.btnLine2 = new FButton.FsButton();
+            this.btnHold = new System.Windows.Forms.Button();
+            this.lblMwi = new System.Windows.Forms.Label();
+            this.btnMwi = new System.Windows.Forms.Button();
+            this.tmMwiPoll = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -91,11 +97,11 @@ namespace Mojo
             this.tbCallerId.Size = new System.Drawing.Size(100, 20);
             this.tbCallerId.TabIndex = 16;
             // 
-            // tmDelivered
+            // tmBufferPoll
             // 
-            this.tmDelivered.Enabled = true;
-            this.tmDelivered.Interval = 1000;
-            this.tmDelivered.Tick += new System.EventHandler(this.tmDelivered_Tick);
+            this.tmBufferPoll.Enabled = true;
+            this.tmBufferPoll.Interval = 1000;
+            this.tmBufferPoll.Tick += new System.EventHandler(this.tmBufferPoll_Tick);
             // 
             // btnLogin
             // 
@@ -252,15 +258,15 @@ namespace Mojo
             this.tbDialed.TabIndex = 19;
             this.tbDialed.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbDialed_KeyPress);
             // 
-            // btnCall
+            // btnDial
             // 
-            this.btnCall.Location = new System.Drawing.Point(186, 172);
-            this.btnCall.Name = "btnCall";
-            this.btnCall.Size = new System.Drawing.Size(90, 23);
-            this.btnCall.TabIndex = 12;
-            this.btnCall.Text = "Call";
-            this.btnCall.UseVisualStyleBackColor = true;
-            this.btnCall.Click += new System.EventHandler(this.btnCall_Click);
+            this.btnDial.Location = new System.Drawing.Point(186, 172);
+            this.btnDial.Name = "btnDial";
+            this.btnDial.Size = new System.Drawing.Size(90, 23);
+            this.btnDial.TabIndex = 12;
+            this.btnDial.Text = "Dial";
+            this.btnDial.UseVisualStyleBackColor = true;
+            this.btnDial.Click += new System.EventHandler(this.btnCall_Click);
             // 
             // btnToggle
             // 
@@ -295,15 +301,81 @@ namespace Mojo
             this.pictureBox1.TabIndex = 22;
             this.pictureBox1.TabStop = false;
             // 
+            // btnLine1
+            // 
+            this.btnLine1.BackColor = System.Drawing.Color.Gray;
+            this.btnLine1.FlasherButtonColorOff = System.Drawing.SystemColors.Control;
+            this.btnLine1.FlasherButtonColorOn = System.Drawing.Color.LightGreen;
+            this.btnLine1.Location = new System.Drawing.Point(186, 206);
+            this.btnLine1.Name = "btnLine1";
+            this.btnLine1.Size = new System.Drawing.Size(90, 23);
+            this.btnLine1.TabIndex = 23;
+            this.btnLine1.Text = "Idle";
+            this.btnLine1.UseVisualStyleBackColor = false;
+            this.btnLine1.Click += new System.EventHandler(this.btnLine1_Click);
+            // 
+            // btnLine2
+            // 
+            this.btnLine2.BackColor = System.Drawing.Color.Gray;
+            this.btnLine2.FlasherButtonColorOff = System.Drawing.SystemColors.Control;
+            this.btnLine2.FlasherButtonColorOn = System.Drawing.Color.LightGreen;
+            this.btnLine2.Location = new System.Drawing.Point(186, 235);
+            this.btnLine2.Name = "btnLine2";
+            this.btnLine2.Size = new System.Drawing.Size(90, 23);
+            this.btnLine2.TabIndex = 24;
+            this.btnLine2.Text = "Idle";
+            this.btnLine2.UseVisualStyleBackColor = false;
+            this.btnLine2.Click += new System.EventHandler(this.btnLine2_Click);
+            // 
+            // btnHold
+            // 
+            this.btnHold.BackColor = System.Drawing.Color.Red;
+            this.btnHold.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnHold.Location = new System.Drawing.Point(186, 265);
+            this.btnHold.Name = "btnHold";
+            this.btnHold.Size = new System.Drawing.Size(90, 23);
+            this.btnHold.TabIndex = 25;
+            this.btnHold.Text = "Hold";
+            this.btnHold.UseVisualStyleBackColor = false;
+            this.btnHold.Click += new System.EventHandler(this.btnHold_Click);
+            // 
+            // lblMwi
+            // 
+            this.lblMwi.AutoSize = true;
+            this.lblMwi.Location = new System.Drawing.Point(29, 275);
+            this.lblMwi.Name = "lblMwi";
+            this.lblMwi.Size = new System.Drawing.Size(50, 13);
+            this.lblMwi.TabIndex = 26;
+            this.lblMwi.Text = "Message";
+            // 
+            // btnMwi
+            // 
+            this.btnMwi.BackColor = System.Drawing.Color.Gray;
+            this.btnMwi.Location = new System.Drawing.Point(85, 270);
+            this.btnMwi.Name = "btnMwi";
+            this.btnMwi.Size = new System.Drawing.Size(22, 23);
+            this.btnMwi.TabIndex = 27;
+            this.btnMwi.UseVisualStyleBackColor = false;
+            // 
+            // tmMwiPoll
+            // 
+            this.tmMwiPoll.Interval = 5000;
+            this.tmMwiPoll.Tick += new System.EventHandler(this.tmMwiPoll_Tick);
+            // 
             // frmMojoMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(289, 115);
+            this.ClientSize = new System.Drawing.Size(293, 300);
+            this.Controls.Add(this.btnMwi);
+            this.Controls.Add(this.lblMwi);
+            this.Controls.Add(this.btnHold);
+            this.Controls.Add(this.btnLine2);
+            this.Controls.Add(this.btnLine1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnMute);
             this.Controls.Add(this.btnToggle);
-            this.Controls.Add(this.btnCall);
+            this.Controls.Add(this.btnDial);
             this.Controls.Add(this.tbDialed);
             this.Controls.Add(this.lblDialed);
             this.Controls.Add(this.btn0);
@@ -341,7 +413,7 @@ namespace Mojo
         private System.Windows.Forms.TextBox tbExtension;
         private System.Windows.Forms.Label lblCaller;
         private System.Windows.Forms.TextBox tbCallerId;
-        private System.Windows.Forms.Timer tmDelivered;
+        private System.Windows.Forms.Timer tmBufferPoll;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Label lblCalledAt;
         private System.Windows.Forms.TextBox tbCalledAt;
@@ -357,10 +429,16 @@ namespace Mojo
         private System.Windows.Forms.Button btn0;
         private System.Windows.Forms.Label lblDialed;
         private System.Windows.Forms.TextBox tbDialed;
-        private System.Windows.Forms.Button btnCall;
+        private System.Windows.Forms.Button btnDial;
         private System.Windows.Forms.Button btnToggle;
         private System.Windows.Forms.Button btnMute;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private FButton.FsButton btnLine1;
+        private FButton.FsButton btnLine2;
+        private System.Windows.Forms.Button btnHold;
+        private System.Windows.Forms.Label lblMwi;
+        private System.Windows.Forms.Button btnMwi;
+        private System.Windows.Forms.Timer tmMwiPoll;
     }
 }
 
