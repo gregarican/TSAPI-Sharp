@@ -366,7 +366,7 @@ namespace Mojo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(293, 300);
+            this.ClientSize = new System.Drawing.Size(293, 115);
             this.Controls.Add(this.btnMwi);
             this.Controls.Add(this.lblMwi);
             this.Controls.Add(this.btnHold);
@@ -401,6 +401,7 @@ namespace Mojo
             this.Name = "frmMojoMain";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Mojo";
+            this.Load += new System.EventHandler(this.frmMojoMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -30,17 +30,8 @@ namespace Mojo
             string strLoginId = Properties.Settings.Default.LoginId;
             string strPasswd = Properties.Settings.Default.Passwd;
             
-            // Open the TServer session
-            bool result = session.open(strLoginId, strPasswd, strServerId);
-            if (result == true)
-            {
-                // The session was successfully opened
-            }
-            else
-            {
-                // The session failed to be opened, so close the form
-                this.Close();
-            }
+            // Attempt to open a TServer session
+            sessionOpenResult = session.open(strLoginId, strPasswd, strServerId);            
         }        
         
         // The method to check caller ID against Outlook contacts
@@ -203,6 +194,12 @@ namespace Mojo
                     tempConnectionId.deviceID = tempDeviceId;
                     tempConnectionId.devIDType = (FButton.FsButton.ConnectionID_Device_t)Convert.ToUInt32(connectionDeviceIdType);
                     this.btnLine1.ActiveCallId = tempConnectionId;
+                    this.WindowState = FormWindowState.Normal;
+                    if (!muted)
+                    {
+                        player.SoundLocation = @"ring.wav";
+                        player.Play();
+                    }
                     return;
                  }
                  else if (this.btnLine2.Text == "Idle")
@@ -218,14 +215,13 @@ namespace Mojo
                     tempConnectionId.deviceID = tempDeviceId;
                     tempConnectionId.devIDType = (FButton.FsButton.ConnectionID_Device_t)Convert.ToUInt32(connectionDeviceIdType);                        
                     this.btnLine2.ActiveCallId = tempConnectionId;
-                 }
-
-                 this.WindowState = FormWindowState.Normal;
-                 if (!muted)
-                 {
-                    player.SoundLocation = @"ring.wav";
-                    player.Play();
-                 }
+                    this.WindowState = FormWindowState.Normal;
+                    if (!muted)
+                    {
+                        player.SoundLocation = @"ring.wav";
+                        player.Play();
+                    }
+                 }                 
             }
         }
 
@@ -233,14 +229,16 @@ namespace Mojo
         private void disconnectedCall()
         {           
             // Feed the event back to the user
-            if (this.btnLine1.Text == "On Call")
+            if (this.btnLine1.Text == "On Call" || this.btnLine1.Text == "Ring")
             {
+                this.btnLine1.FlasherButtonStop();
                 this.btnLine1.BackColor = Color.Gray;
                 this.btnLine1.Text = "Idle";
                 return;
             }
-            else if (this.btnLine2.Text == "On Call")
+            else if (this.btnLine2.Text == "On Call" || this.btnLine2.Text == "Ring")
             {
+                this.btnLine2.FlasherButtonStop();
                 this.btnLine2.BackColor = Color.Gray;
                 this.btnLine2.Text = "Idle";
             }            
@@ -568,6 +566,7 @@ namespace Mojo
             session.checkTServer();
         }
 
+        // The method that polls the TServer buffer to messages back from the TServer
         private void checkTServerBuffer(object sender, Tsapi.TServerBufferEventArgs e)
         {
             // Ringing call
@@ -609,13 +608,24 @@ namespace Mojo
             }
         }
 
+        // If the TSAPI session wasn't successfully opened then stop the timer and exit the program
+        private void frmMojoMain_Load(object sender, EventArgs e)
+        {
+            if (!sessionOpenResult)
+            {
+                // The session failed to be opened, so close the form 
+                this.tmBufferPoll.Stop();
+                this.tmBufferPoll = null;
+                System.Windows.Forms.Application.DoEvents();
+                this.Close();
+            }
+        }     
+
         // Define the instance variables referenced throughout the class
         string strExtension;
         SoundPlayer player = new SoundPlayer();
         bool muted = false;
-        Tsapi session = new Tsapi();      
-            
+        Tsapi session = new Tsapi();
+        bool sessionOpenResult;
     }
-
-    
 }

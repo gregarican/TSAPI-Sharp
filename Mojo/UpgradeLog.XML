@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="Mojo">
+</Property><Property Name="Solution File" Value="C:\Users\gkujawa\Documents\GitHub\diamondcellar-projects\Mojo\Mojo.sln">
+</Property><Property Name="Date" Value="Thursday, June 09, 2016">
+</Property><Property Name="Time" Value="15:24 PM">
+</Property></Properties><Event ErrorLevel="0" Project="Mojo" Source="Mojo\Mojo.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Mojo" Source="Mojo\Mojo.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="Mojo.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="Mojo.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Mojo" Source="Mojo\Mojo.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>
